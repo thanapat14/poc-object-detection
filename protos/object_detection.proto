@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package objectdetection;
+
+// ObjectDetection service definition.
+service ObjectDetection {
+  // Detect RPC method that takes a DetectionRequest and returns a DetectionResponse.
+  rpc Detect(DetectionRequest) returns (DetectionResponse);
+}
+
+// DetectionRequest message containing the image data.
+message DetectionRequest {
+  bytes image = 1;            // The image file in bytes to be processed.
+  string image_file_path = 2; // Path to the image file to be processed.
+  string model_name = 3;      // Name of the model to be used for detection.
+}
+
+// DetectionResponse message containing a list of detections.
+message DetectionResponse {
+  repeated Detection detections = 1; // List of detected objects.
+}
+
+// Detection message containing details about a single detected object.
+message Detection {
+  string label = 1;     // Label or class name of the detected object.
+  float confidence = 2; // Confidence score of the detection.
+  float x = 3;          // X coordinate of the bounding box's center.
+  float y = 4;          // Y coordinate of the bounding box's center.
+  float width = 5;      // Width of the bounding box.
+  float height = 6;     // Height of the bounding box.
+}
